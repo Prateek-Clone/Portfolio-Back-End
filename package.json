@@ -1,5 +1,5 @@
 {
-  "name": "portfolio-back-end",
+  "name": "backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,23 +7,15 @@
     "server": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Prateek-Clone/Portfolio-Back-End.git"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Prateek-Clone/Portfolio-Back-End/issues"
-  },
-  "homepage": "https://github.com/Prateek-Clone/Portfolio-Back-End#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "moment": "^2.29.4",
-    "mongoose": "^7.4.3",
+    "mongoose": "^6.0.0",
     "nodemon": "^3.0.1"
   }
 }
