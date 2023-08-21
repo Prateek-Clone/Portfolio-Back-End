@@ -61,6 +61,7 @@ app.post("/sendmessage", async (req, res) => {
   }
 });
 
+mongoose.set("strictQuery", false);
 app.listen(8080, async () => {
   try {
     await mongoose.connect(process.env.DB_Url, {
