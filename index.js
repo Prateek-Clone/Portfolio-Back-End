@@ -6,10 +6,10 @@ require("dotenv").config();
 
 const app = express();
 
-mongoose.set("strictQuery", false);
 app.use(cors());
 app.use(express.json());
 
+mongoose.set("strictQuery", false);
 const messageSchema = new mongoose.Schema(
   {
     name: String,
@@ -21,7 +21,6 @@ const messageSchema = new mongoose.Schema(
   },
   { versionKey: false }
 );
-
 const MessageModel = mongoose.model("PortfolioMessages", messageSchema);
 
 // Home Route
@@ -52,7 +51,6 @@ app.post("/sendmessage", async (req, res) => {
       time: formattedTime,
       day: dayOfWeek,
     });
-
     await newMessage.save();
 
     res.status(201).json({ message: "Message Sent Successfully!" });
