@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const moment = require("moment");
+const moment = require("moment-timezone");
 const cors = require("cors");
 require("dotenv").config();
 
@@ -39,9 +39,12 @@ app.post("/sendmessage", async (req, res) => {
     const { name, email, message } = req.body;
 
     const currentDate = new Date();
-    const formattedDate = moment(currentDate).format("DD MMM YYYY");
-    const formattedTime = moment(currentDate).format("h:mm A");
-    const dayOfWeek = moment(currentDate).format("dddd");
+    const timeZone = "Asia/Kolkata";
+    const formattedDate = moment(currentDate)
+      .tz(timeZone)
+      .format("DD MMM YYYY");
+    const formattedTime = moment(currentDate).tz(timeZone).format("h:mm A");
+    const dayOfWeek = moment(currentDate).tz(timeZone).format("dddd");
 
     const newMessage = new MessageModel({
       name,
