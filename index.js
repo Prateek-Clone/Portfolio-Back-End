@@ -26,10 +26,10 @@ const MessageModel = mongoose.model("Messages", messageSchema);
 // Home Route
 app.get("/", async (req, res) => {
   try {
-    res.status(201).json({ message: "You Shouldn't Be Here!" });
+    res.status(201).json({ msg: "You Shouldn't Be Here!" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Something went Wrong!" });
+    res.status(500).json({ msg: "Something went Wrong!" });
   }
 });
 
@@ -47,13 +47,13 @@ app.post("/sendmessage", async (req, res) => {
     const { name, email, message } = req.body;
 
     if (!name) {
-      return res.status(401).json({ message: "Please provide your name." });
+      return res.status(401).json({ msg: "Please provide your name." });
     }
     if (!email) {
-      return res.status(401).json({ message: "Invalid e-mail!" });
+      return res.status(401).json({ msg: "Invalid e-mail!" });
     }
     if (!message) {
-      return res.status(401).json({ message: "Please enter a valid email." });
+      return res.status(401).json({ msg: "Please enter a valid email." });
     }
 
     const currentDate = new Date();
@@ -114,7 +114,7 @@ app.post("/sendmessage", async (req, res) => {
     transporter.sendMail(BusinessNotification, (error, info) => {
       if (error) {
         console.error("Error sending email details to business email :", error);
-        return res.status(500).json({ message: "Encountered a server issue!" });
+        return res.status(500).json({ msg: "Encountered a server issue!" });
       }
     });
 
@@ -174,15 +174,15 @@ app.post("/sendmessage", async (req, res) => {
         console.error(error);
         return res
           .status(500)
-          .json({ message: "Encountered an error sending response." });
+          .json({ msg: "Encountered an error sending response." });
       } else {
         console.log("Email sent response: ", info.response);
-        return res.status(201).json({ message: "Message Sent 👍" });
+        return res.status(201).json({ msg: "Message Sent 👍" });
       }
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Service currently unavailable." });
+    res.status(500).json({ msg: "Service currently unavailable." });
   }
 });
 
