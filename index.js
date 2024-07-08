@@ -13,15 +13,15 @@ app.use(express.json());
 mongoose.set("strictQuery", false);
 const messageSchema = new mongoose.Schema(
   {
-    name: String,
-    email: String,
-    message: String,
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    message: { type: String, required: true },
     date: String,
     time: String,
   },
   { versionKey: false }
 );
-const MessageModel = mongoose.model("PortfolioMessages", messageSchema);
+const MessageModel = mongoose.model("Messages", messageSchema);
 
 // Home Route
 app.get("/", async (req, res) => {
@@ -45,6 +45,16 @@ const transporter = nodemailer.createTransport({
 app.post("/sendmessage", async (req, res) => {
   try {
     const { name, email, message } = req.body;
+
+    if (!name) {
+      return res.status(401).json({ message: "Please provide your name." });
+    }
+    if (!email) {
+      return res.status(401).json({ message: "Invalid e-mail!" });
+    }
+    if (!message) {
+      return res.status(401).json({ message: "Please enter a valid email." });
+    }
 
     const currentDate = new Date();
     const timeZone = "Asia/Kolkata";
@@ -103,8 +113,8 @@ app.post("/sendmessage", async (req, res) => {
     };
     transporter.sendMail(BusinessNotification, (error, info) => {
       if (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Something went Wrong!" });
+        console.error("Error sending email details to business email :", error);
+        return res.status(500).json({ message: "Encountered a server issue!" });
       }
     });
 
@@ -162,15 +172,17 @@ app.post("/sendmessage", async (req, res) => {
     transporter.sendMail(UserNotification, (error, info) => {
       if (error) {
         console.error(error);
-        return res.status(500).json({ message: "Something went Wrong!" });
+        return res
+          .status(500)
+          .json({ message: "Encountered an error sending response." });
       } else {
-        console.log("Email sent: " + info.response);
-        return res.status(201).json({ message: "Message Sent Successfully!" });
+        console.log("Email sent response: ", info.response);
+        return res.status(201).json({ message: "Message Sent 👍" });
       }
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Something went Wrong!" });
+    res.status(500).json({ message: "Service currently unavailable." });
   }
 });
 
